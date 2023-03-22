@@ -81,7 +81,9 @@ public class StudentDAO extends DBContext{
  
     }
     
-    
+    public static void main(String[] args) {
+        
+    }
     
     
 }

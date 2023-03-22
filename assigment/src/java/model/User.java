@@ -24,6 +24,17 @@ public class User {
         this.roleid = roleid;
     }
 
+    public User(String username, String pasword, String addres, String phone) {
+        this.username = username;
+        this.pasword = pasword;
+        this.addres = addres;
+        this.phone = phone;
+    }
+
+    
+    
+    
+    
     public User(int id, String username, String pasword, String addres, String phone, int roleid) {
         this.id = id;
         this.username = username;
@@ -33,6 +44,16 @@ public class User {
         this.roleid = roleid;
     }
 
+    public User(int id, String username, String addres, String phone, Tour tour) {
+        this.id = id;
+        this.username = username;
+        this.addres = addres;
+        this.phone = phone;
+        this.tour = tour;
+    }
+
+  
+    
     public int getRoleid() {
         return roleid;
     }
@@ -100,7 +121,9 @@ public class User {
 
     @Override
     public String toString() {
-        return super.toString(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        return "User{" + "id=" + id + ", username=" + username + ", pasword=" + pasword + ", addres=" + addres + ", phone=" + phone + ", roleid=" + roleid + ", tour=" + tour + '}';
     }
+
+ 
 
 }

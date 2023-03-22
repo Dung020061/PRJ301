@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- 
     Document   : TourUser
     Created on : Mar 20, 2023, 10:28:13 AM
@@ -16,16 +17,17 @@
     </head>
     <body>
         <jsp:include page="menu.jsp"></jsp:include>
-            <h1>List tour !</h1><!-- comment -->
-            <form action="TourUser" method="post">
+            <h1>abc!</h1><!-- comment -->
+            <form action="TourUser" method="get">
+
                 <table class="table table-success table-striped">
                     <thead>
                         <tr>
-                            <th>Userid</th>
+                            <th>UserId</th>
                             <th>Username</th>
                             <th>address</th>
                             <th>phone</th>
-                            <th>tourid</th>
+                            <th>TourId</th>
                             <th>name</th>
                             <th>dob</th>
                             <th>price</th>
@@ -35,33 +37,32 @@
                     <tbody>
                     <c:forEach var="c" items="${list}">
 
-                    <tr>
-                        <td>${c.id}</td>
-                        <td>${c.username}</td>
-                        <td>${c.addres}</td>
-                        <td>${c.phone}</td>
-                        <td>${c.getTour().getId()}</td>
-                        <td> ${c.getTour().getName()} </td>
-                        <td> ${c.getTour().getDob()} </td>
-                        <td> ${c.getTour().getPrice()} </td>
+                        <tr>
+                            <td>${c.id}</td>
+                            <td>${c.username}</td>
+                            <td>${c.addres}</td>
+                            <td>${c.phone}</td>
+                            <td>${c.getTour().getId()}</td>
+                            <td> ${c.getTour().getName()} </td>
+                            <td> ${c.getTour().getDob()} </td>
+                            <td> ${c.getTour().getPrice()} </td>
 
-                    </tr>
+                        </tr>
 
 
-                </c:forEach>
-
+                    </c:forEach>
 
 
                 </tbody>
             </table>
 
 
-
-
-
-
-
         </form>
+
+
+
+
+
 
     </body>
 </html>

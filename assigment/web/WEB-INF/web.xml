@@ -76,6 +76,10 @@
         <servlet-name>TourUser</servlet-name>
         <servlet-class>controller.TourUser</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>editprofile</servlet-name>
+        <servlet-class>controller.editprofile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>sum</servlet-name>
         <url-pattern>/sum</url-pattern>
@@ -151,6 +155,10 @@
     <servlet-mapping>
         <servlet-name>TourUser</servlet-name>
         <url-pattern>/TourUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editprofile</servlet-name>
+        <url-pattern>/editprofile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

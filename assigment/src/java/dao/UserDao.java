@@ -48,6 +48,25 @@ public class UserDao extends DBContext {
 
     }
 
+    public ArrayList<User> getProfile(String id) {
+        ArrayList<User> list = new ArrayList<>();
+        String sql = "select * from [user] where id = ?";
+        try {
+            PreparedStatement statement = connection.prepareCall(sql);
+            statement.setString(1, id);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                User s = new User(rs.getString(2),rs.getString(3),rs.getString(4), rs.getString(5));
+                list.add(s);
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     public ArrayList<User> getallusers() {
         ArrayList<User> list = new ArrayList<>();
         String sql = "SELECT TOP (1000) [id]\n"
@@ -173,40 +192,31 @@ public class UserDao extends DBContext {
             //  stm.setInt(5, (index - 1) * 9);
             // ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                User u = new User();
-                u.setId(rs.getInt("userid"));
-                u.setUsername(rs.getString("username"));
-                u.setAddres(rs.getString("address"));
-                u.setPhone(rs.getString("phone"));
-                Tour t = new Tour();
-                t.setId(rs.getInt("tourid"));
-                t.setName(rs.getString("name"));
-                t.setDob(rs.getDate("dob"));
-                t.setPrice(rs.getFloat("price"));
-
-                u.setTour(t);
+                Tour t = new Tour(rs.getInt(5), rs.getString(6), rs.getDate(7), rs.getFloat(8));
+                User u = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), t);
                 list.add(u);
                 //s.getString("address"), rs.getString("phone")), new Tour(rs.getInt("tourid"), rs.getString("name")), rs.getDate("dob"), rs.getFloat("price")));
                 //FeedbackList.add(fb);
             }
+            return list;
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
-        return list;
+        return null;
     }
 
-     public User getalluserByID(String uid) {
-
-        String sql = "   select * from [user] where id=?;";
+    public ArrayList<User> getalluserByID(String uid) {
+        ArrayList<User> list = new ArrayList<>();
+        String sql = "  select * from [user] where roleid=0 and id=?";
 
         try {
-            PreparedStatement statement = connection.prepareCall(sql);
 
+            PreparedStatement statement = connection.prepareCall(sql);
             statement.setString(1, uid);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
+                User u = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), 0);
 
             }
 
@@ -216,30 +226,46 @@ public class UserDao extends DBContext {
 
         return null;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    public static void main(String[] args) {
-        UserDao D = new UserDao();
 
-        ArrayList<User> list = D.getuserandtour("3");
-        for (User user : list) {
-            System.out.println(user.toString());
+    public void editProfile(String username, String password, String address, String phone, String id) {
+        try {
+            String sql = "update [user] set [username]=?,[password]=?,[address]=?,[phone]=? where id=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, address);
+            preparedStatement.setString(4, phone);
+
+            preparedStatement.setString(5, id);
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
+
+    public static void main(String[] args) {
+        UserDao D = new UserDao();
+        ArrayList<User> list = D.getuserandtour("1");
+        for (User user : list) {
+            System.out.println(user.getTour().getName());
+        }
+
+        // HttpSession session = request.getSession();
+        //    session.getAttribute("acc");
+//            
+//       UserDao d = new UserDao();
+//   
+//     User a=  d.getalluserByID("1");
+//     
+//     
+//        ArrayList<User> list = d.getuserandtour(String.valueOf(a));
+//        for (User user : list) {
+//            System.out.println(user);
+    }
+    //    User d1=(User)session.getAttribute("acc"); 
+    //    d1.getId();
+
+    // System.out.println(a);
 }

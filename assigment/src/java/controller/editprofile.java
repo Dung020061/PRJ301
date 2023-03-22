@@ -4,7 +4,6 @@
  */
 package controller;
 
-import dao.TourDao;
 import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,14 +13,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
-import model.Tour;
 import model.User;
 
 /**
  *
  * @author ADMIN
  */
-public class TourUser extends HttpServlet {
+public class editprofile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,21 +32,8 @@ public class TourUser extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("acc");
 
-        UserDao d = new UserDao();
-//        User a = d.getalluserByID(u.getId()+"");
-//
-        ArrayList<User> list = d.getuserandtour(u.getId() + "");
-//        for (User user : list) {
-//            response.getWriter().print(user.toString());
-//        }
-
-        request.setAttribute("list", list);
-
-        request.getRequestDispatcher("TourUser.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,8 +48,12 @@ public class TourUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        processRequest(request, response);
+         HttpSession session = request.getSession();
+         User ur = (User) session.getAttribute("acc");
+        UserDao dao = new UserDao();
+        ArrayList<User> u = dao.getProfile(ur.getId() +"");
+        session.setAttribute("profile", u);
+        request.getRequestDispatcher("editprofile.jsp").forward(request, response);
 
     }
 
@@ -79,19 +68,16 @@ public class TourUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-//        String id = request.getParameter("id");
-//        if (id == null) {
-//            id = "";
-//        }
-//        UserDao d = new UserDao();
-//        TourDao a = new TourDao();
-//        a.getalltour();
-//
-//        ArrayList<User> list = d.getuserandtour(id);
-//        request.setAttribute("list", list);
-//        request.setAttribute("d", d);
-//        request.getRequestDispatcher("TourUser.jsp").forward(request, response);
+        String id = request.getParameter("id");
+        String username = request.getParameter("name");
+        String password = request.getParameter("pass");
+        String address = request.getParameter("address");
+
+        String phone = request.getParameter(" phone");
+
+        UserDao dao = new UserDao();
+        dao.editProfile(username, password, address, phone, id);
+        response.sendRedirect("Login");
     }
 
     /**

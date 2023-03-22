@@ -11,15 +11,25 @@ import java.sql.Date;
  * @author ADMIN
  */
 public class Tour {
-   int id;
-        String name;
-   Date dob;
-      String img;
-      float price;
-      String description;
+
+    int id;
+    String name;
+    Date dob;
+    String img;
+    float price;
+    String description;
 
     public Tour() {
     }
+
+    public Tour(int id, String name, Date dob, float price) {
+        this.id = id;
+        this.name = name;
+        this.dob = dob;
+        this.price = price;
+    }
+
+
 
     public Tour(int id, String name, Date dob, String img, float price, String description) {
         this.id = id;
@@ -30,7 +40,6 @@ public class Tour {
         this.description = description;
     }
 
-  
     public int getId() {
         return id;
     }
@@ -84,6 +93,4 @@ public class Tour {
         return "Tour{" + "id=" + id + ", name=" + name + ", dob=" + dob + ", img=" + img + ", price=" + price + ", description=" + description + '}';
     }
 
-
-       
 }

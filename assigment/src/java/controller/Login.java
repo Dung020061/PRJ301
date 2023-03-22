@@ -90,17 +90,23 @@ public class Login extends HttpServlet {
         UserDao loginDAO = new UserDao();
         User a = loginDAO.checkLogin(user, pass);
         //            DataAccount acc = loginDAO.getData(user, pass);
-
-//        if (a.getRoleid() == 2) {
-//            request.setAttribute("ms1", "You have been blocked! Please contact us to know more");
-//            request.getRequestDispatcher("login.jsp").forward(request, response);
 //
-//        }
+//   if (a.getRoleid() == 2) {
+//           request.setAttribute("ms1", "You have been blocked! Please contact us to know more");
+//           request.getRequestDispatcher("login.jsp").forward(request, response);
+//
+//      }
 
         if (a == null) {
             request.setAttribute("mess", "wrong account");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
+            
+   if (a.getRoleid() == 2) {
+           request.setAttribute("mess", "You have been blocked! Please contact us to know more");
+           request.getRequestDispatcher("login.jsp").forward(request, response);
+
+      }
             HttpSession session = request.getSession();
             session.setAttribute("acc", a);
             Cookie u = new Cookie("userCooki", user);
